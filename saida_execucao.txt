@@ -1,0 +1,98 @@
+========================================================================
+BLOCO A - RELATORIOS DE QUALIDADE E PRODUCAO
+========================================================================
+
+[R01] Quantidade total de linhas importadas:
+  - Total de linhas brutas: 252
+
+[R02] Registros duplicados e exames unicos:
+  - Duplicados descartados: 12
+  - Total de exames unicos: 240
+
+[R03] Quantidade de valores ausentes:
+  - tempo_processamento_h: 4
+  - valor_rs:              2
+  - turno:                 2
+
+[R04] Quantidade de exames por unidade (ordem alfabetica):
+  - Iguape         : 62
+  - Jacupiranga    : 65
+  - Pariquera-Açu  : 58
+  - Registro       : 55
+
+[R05] Quantidade de exames por tipo_exame (ordem alfabetica):
+  - Colesterol     : 43
+  - Glicemia       : 29
+  - Hemograma      : 35
+  - TSH            : 40
+  - Triglicerideos : 50
+  - Urina tipo I   : 43
+
+[R06] Quantidade de exames por prioridade:
+  - Rotina         : 177
+  - Urgente        : 63
+
+[R07] Quantidade de exames por turno:
+  - Manha          : 79
+  - Tarde          : 80
+  - Noite          : 79
+  - Nao informado  : 2
+
+[R08] Percentual de recoleta por unidade:
+  - Iguape         :  14.52% (9/62)
+  - Jacupiranga    :  20.00% (13/65)
+  - Pariquera-Açu  :  12.07% (7/58)
+  - Registro       :  14.55% (8/55)
+
+========================================================================
+BLOCO B - RELATORIOS ANALITICOS E CLASSIFICACAO
+========================================================================
+
+[R09] Valor total e medio por tipo de exame (ignorando ausentes):
+  - Colesterol     : Total = R$  1073.00 | Media = R$  24.95 (n = 43 exames)
+  - Glicemia       : Total = R$   507.00 | Media = R$  17.48 (n = 29 exames)
+  - Hemograma      : Total = R$  1060.00 | Media = R$  31.18 (n = 34 exames)
+  - TSH            : Total = R$  1664.00 | Media = R$  41.60 (n = 40 exames)
+  - Triglicerideos : Total = R$  1320.00 | Media = R$  26.94 (n = 49 exames)
+  - Urina tipo I   : Total = R$  1009.00 | Media = R$  23.47 (n = 43 exames)
+
+[R10] Tempo medio e mediana de processamento por prioridade:
+  - Rotina         : Media = 18.85 h | Mediana = 19.00 h (n = 175 exames)
+  - Urgente        : Media =  5.41 h | Mediana =  5.00 h (n = 61 exames)
+
+[R11] Percentual de atraso real por unidade:
+  - Iguape         :  30.65% (19/62)
+  - Jacupiranga    :  36.92% (24/65)
+  - Pariquera-Açu  :  39.66% (23/58)
+  - Registro       :  34.55% (19/55)
+
+[R12] Tres tipos de exame mais frequentes:
+  1o. Triglicerideos : 50 exames
+  2o. Colesterol     : 43 exames
+  3o. Urina tipo I   : 43 exames
+
+[R13] Matriz de confusao do alerta operacional:
+  - Registros avaliados: 236 (excluidos sem tempo: 4)
+  +--------------------------+--------------------+--------------------+
+  | Real \ Predicao          | Predito POSITIVO   | Predito NEGATIVO   |
+  +--------------------------+--------------------+--------------------+
+  | Real POSITIVO (Atraso)   | TP = 84             | FN = 0              |
+  | Real NEGATIVO (No Prazo) | FP = 51             | TN = 101            |
+  +--------------------------+--------------------+--------------------+
+  - TP (Verdadeiro Positivo): 84
+  - FP (Falso Positivo):      51
+  - FN (Falso Negativo):      0
+  - TN (Verdadeiro Negativo): 101
+
+[R14] Metricas de avaliacao do alerta:
+  - Precisao (Precision): 0.6222
+  - Revocacao (Recall):   1.0000
+
+[R15] Interpretacao gerencial e limitacao da regra:
+  Como decisao gerencial, a diretoria pode adotar o alerta para contingencia e
+  priorizacao de bancada, pois a revocacao de 1.0000 elimina falsos negativos e
+  evita estouros de SLA. Em contrapartida, a limitacao e a baixa precisao (0.6222),
+  que gera 51 alarmes falsos decorrentes do corte temporal estatico antecipado,
+  provocando retrabalho e risco de fadiga de alertas na equipe tecnica.
+
+========================================================================

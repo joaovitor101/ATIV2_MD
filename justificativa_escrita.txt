@@ -1,0 +1,49 @@
+1. TRATAMENTO DOS VALORES AUSENTES (CAMPOS EM BRANCO)
+--------------------------------------------------------------------------------
+No arquivo analisado, encontramos alguns campos sem preenchimento:
+- 4 exames sem tempo de processamento;
+- 2 exames sem valor em R$;
+- 2 exames sem turno indicado.
+
+• Por que NÃO preencher com zero?
+  1. Foge da realidade do laboratório: Nenhum exame é feito em 0 horas (tempo zero) 
+     e nenhum exame custa R$ 0,00. Colocar zero seria inventar um dado falso.
+  2. Derruba as médias artificialmente: Se somarmos zeros na conta, a média de 
+     tempo e de faturamento vai cair drasticamente. Isso daria a falsa impressão 
+     de que o laboratório é mais rápido do que realmente é e que fatura menos 
+     por procedimento, mascarando eventuais atrasos.
+
+• Como foram tratados na prática?
+  - Dados numéricos (tempo e valor): Foram mantidos como vazios (None no Python). 
+    No cálculo de médias e medianas, consideramos apenas os exames que possuem 
+    valores reais preenchidos, dividindo pela quantidade exata de exames válidos 
+    (informando o "n" em cada relatório). Isso evita distorcer as contas e não 
+    descarta o restante dos dados daquele exame.
+  - Dados textuais (turno): O campo em branco foi categorizado como "Nao informado". 
+    Dessa forma, o exame continua na contagem geral e a gestão consegue visualizar 
+    claramente que houve falha de cadastro na recepção.
+
+
+2. POR QUE REGISTROS DUPLICADOS DISTORCEM OS RESULTADOS?
+--------------------------------------------------------------------------------
+Das 252 linhas do arquivo original, 12 eram repetições exatas de exames que já 
+estavam na base. Se essas repetições não fossem removidas, causariam quatro 
+grandes distorções:
+
+  1. Volume de exames falso: Pareceria que o laboratório realizou 252 exames, 
+     quando na verdade atendeu apenas 240 procedimentos únicos.
+  2. Faturamento e custos inflados: Somar um exame duplicado significa contar a 
+     mesma receita duas vezes no caixa. O faturamento total apresentado seria 
+     maior do que o dinheiro que realmente entrou.
+  3. Taxas de atraso e recoleta enviesadas: Se um exame que atrasou estiver 
+     duplicado no sistema, parecerá que ocorreram dois atrasos, aumentando 
+     injustamente a taxa de erro de uma determinada unidade regional.
+  4. Decisões erradas em algoritmos: Na Mineração de Dados, algoritmos aprendem 
+     com base na frequência das coisas. Dados repetidos fazem o sistema achar que 
+     certos padrões acontecem com mais força do que na realidade.
+
+• Como foram tratados na prática?
+  Foi feita a deduplicação usando o código único de cada exame (id_exame). O sistema 
+  manteve a primeira vez em que o exame apareceu e descartou as repetições seguintes, 
+  deixando a base com exatamente 240 exames reais e confiáveis.
+================================================================================
